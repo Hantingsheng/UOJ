@@ -1,83 +1,95 @@
 # Universal Online Judge
 
-## Dependence
-This is a dockerized version of UOJ. Before installation, please make sure that [Docker](https://www.docker.com/) has already been installed on your OS.
+**阅读之前，请先将 `UOJ.zip` 下载并解压缩！**
 
-The docker image of UOJ is **64-bit**, so a **32-bit** host OS may cause installation failure.
+## 序言
 
-## Installation
-First please download [JDK7u76](http://www.oracle.com/technetwork/java/javase/downloads/java-archive-downloads-javase7-521261.html#jdk-7u76-oth-JPR) and [JDK8u31](http://www.oracle.com/technetwork/java/javase/downloads/java-archive-javase8-2177648.html#jdk-8u31-oth-JPR), and put them to `docker/jdk-7u76-linux-x64.tar.gz` and `docker/jdk-8u31-linux-x64.tar.gz`. These two compressed files are used by judge\_client for judging Java program. If you are too lazy to download these two huge files, you can simply place two empty .tar.gz files there.
+这是UOJ的已归档版本. 在安装之前，请确保 [Docker](https://www.docker.com/) 已安装在您的操作系统上.
 
-Next, you can run the following command in your terminal: (not the one in the `docker/` directory!)
+UOJ的docker映像是**64位**，因此**32位**主机操作系统可能会导致安装失败, 而且不建议在 `windows` 下安装.
+
+如果发现了UOJ的Bug, 可以联系 `uojmanagers@groups.163.com` 或 `vfleaking@163.com`.
+
+Universal OJ 开源群群号: `590822951`. 想研究源码以及安装有困难的各位, 在群里多交流哈～
+
+## 安装
+
+首先需要下载 [JDK7u76](http://www.oracle.com/technetwork/java/javase/downloads/java-archive-downloads-javase7-521261.html#jdk-7u76-oth-JPR) 和 [JDK8u31](http://www.oracle.com/technetwork/java/javase/downloads/java-archive-javase8-2177648.html#jdk-8u31-oth-JPR), 然后把它们放入 `docker/jdk-7u76-linux-x64.tar.gz` 和 `docker/jdk-8u31-linux-x64.tar.gz` 中. 这两个压缩文件供测评机测评Java. 如果您不想下载这两个大文件，则只需在其中放置两个空的 `.tar.gz` 文件(测评机便不支持测评Java).
+
+接下来，您需要在终端中运行以下命令: (不是在 `docker` 目录中的命令)
 ```sh
 ./install
 ```
-If everything goes well, you will see `Successfully built <image-id>` in the last line of the output.
+如果一切顺利，您将在输出的**最后一行**中看到 `Successfully built <image-id>` .
 
-To start your UOJ main server, please run:
+要启动您的UOJ主服务器，请运行:
 ```sh
 docker run -it -p 80:80 -p 3690:3690 <image-id>
 ```
-If you are using docker on Mac OS or having 'std: compile error. no comment' message on uploading problem data, you could possibly use this alternative command:
+如果您在Mac OS上使用docker报错 `std: compile error. no comment`, 您可以使用以下命令替代:
 ```sh
 docker run -it -p 80:80 -p 3690:3690 --cap-add SYS_PTRACE <image-id>
 ```
 
-The default hostname of UOJ is `local_uoj.ac`, so you need to modify your host file in your OS in order to map `127.0.0.1` to `local_uoj.ac`. (It is `/etc/hosts` on Linux.) After that, you can access UOJ in your web browser.
+UOJ的默认主机名是 `local_uoj.ac`, 因此您需要在操作系统中修改主机文件，以将 `127.0.0.1` 映射到 `local_uoj.ac`. (在Linux上是 `/etc/hosts` ) 之后，您可以在Web浏览器中访问UOJ。
 
-The first user registered after the installation of UOJ will be a super user. If you need another super user, please register a user and change its `usergroup` to "<samp>S</samp>" in the table `user_info`. Run
+UOJ安装后注册的第一个用户将是超户. 如果您需要另一个超户, 请注册一个用户，并将其 `user group` 更改为 `user_info` 表中的 `<samp>S</samp>`.
+
+运行
 ```sh
 mysql app_uoj233 -u root -p
 ```
-to login mysql in the terminal.
+来在终端中登录mysql.
 
-Notice that if you want only one judge client, then everything is ok now. Cheers!
+请注意, 如果您只需要一名测评用户, 那么现在无需再进行麻烦的测评用户添加程序了.
 
-However, if you want more judge clients, you need to set up them one by one. First run:
+但是, 如果您想要更多的测评用户, 则需要一个一个地建立他们. 首先运行：
 ```sh
 ./config_judge_client
 ```
-and answer the questions.
+并填写信息:
 
-* uoj container id: the container id of the main server.
-* uoj ip: the ip address of the main server.
-* judger name: you can take a name you like, such as judger, judger\_2, very\_strong\_judger. (containing special characters may cause  unforeseeable consequence.)
+* uoj测评用户ID: 主服务器的ID.
+* uoj测评用户IP: 主服务器的IP地址.
+* 测评用户的名字: 你可以取一个你喜欢的名字, 比如 `judger`, `judger_2`, `very_strong_judger`. (最好不要包含特殊字符)
 
-After that, a sql command is given, we will talk about it later.
+之后, 给出一个sql命令.
 
-Next, we need to run:
+接下来, 我们需要运行:
 ```sh
 ./install_judge_client
 ```
-to build the docker image. If you want to run judger at the same server, you just need to run
+
+来构建docker映像. 如果要在同一台服务器上运行测评器, 则只需运行:
 ```sh
 docker run -it <image-id>
 ```
-And, you need to complete the sql command given just now with the ip address of the judger docker, and modify the database. To someone who do not know how to get the ip address of a docker container, here is the answer:
+
+并且，您需要使用测评器docker的IP地址完成刚才给出的sql命令, 并修改数据库. 如果你不知道如何获取docker测评器的IP地址, 则在终端中输入以下命令:
 ```sh
 docker inspect --format '{{ .NetworkSettings.IPAddress }}' <container-id>
 ```
 
-Or, if you want to run judger at different server, you need to copy the image to the other server, and run
+或者, 如果要在其他服务器上运行判断器, 则需要将映像复制到其他服务器上并运行
 ```sh
 docker run -p 2333 -it <image-id>
 ```
-Similarly, you need to complete the sql command and modify the database. This time, you need to fill with the ip address of the host machine of the judger docker.
+同样, 您需要完成sql命令并修改数据库. 这次, 您需要填写测评机docker主机的IP地址.
 
-You may meet many difficulties during the installation. Good luck and have fun!
+在安装过程中可能会遇到很多问题, 祝你好运(*^▽^*).
 
-## Notes
+## 备注
 
-mysql default password: root
+mysql默认密码: `root`
 
-local\_main\_judger password: judger
+本地测评用户密码: `judger`
 
-You can change the default hostname and something else in `/var/www/uoj/app/.config.php`. However, not all the config is here, haha.
+您可以在 `/var/www/uoj/app/.config.php` 中更改默认主机名和其他名称.
 
-## More Documentation
-As you know, my Yingyu is not very hao. Suoyi only the README file is En(Chi)nglish for internationalization.
+## 许可证
 
-More documentation is here: [https://vfleaking.github.io/uoj/](https://vfleaking.github.io/uoj/)
+MIT License
 
-## License
-MIT License.
+#### 嗯最后，祝大家 UOJ 使用愉快！
+
+#### 愿 UOJ 开源能带来更多的便利，愿能帮到更多还在路上的 OIer 们.
