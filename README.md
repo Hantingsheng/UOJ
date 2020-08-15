@@ -1,7 +1,5 @@
 # Universal Online Judge
 
-**阅读之前，请先将 `UOJ.zip` 下载并解压缩！**
-
 ## 序言
 
 这是UOJ的已归档版本. 在安装之前，请确保 [Docker](https://www.docker.com/) 已安装在您的操作系统上.
@@ -14,7 +12,7 @@ Universal OJ 开源群群号: `590822951`. 想研究源码以及安装有困难�
 
 ## 安装
 
-首先需要下载 [JDK7u76](http://www.oracle.com/technetwork/java/javase/downloads/java-archive-downloads-javase7-521261.html#jdk-7u76-oth-JPR) 和 [JDK8u31](http://www.oracle.com/technetwork/java/javase/downloads/java-archive-javase8-2177648.html#jdk-8u31-oth-JPR), 然后把它们放入 `docker/jdk-7u76-linux-x64.tar.gz` 和 `docker/jdk-8u31-linux-x64.tar.gz` 中. 这两个压缩文件供测评机测评Java. 如果您不想下载这两个大文件，则只需在其中放置两个空的 `.tar.gz` 文件(测评机便不支持测评Java).
+首先需要下载 [JDK7u76](http://www.oracle.com/technetwork/java/javase/downloads/java-archive-downloads-javase7-521261.html#jdk-7u76-oth-JPR) 和 [JDK8u31](http://www.oracle.com/technetwork/java/javase/downloads/java-archive-javase8-2177648.html#jdk-8u31-oth-JPR), 然后把它们放入 `docker/jdk-7u76-linux-x64.tar.gz` 和 `docker/jdk-8u31-linux-x64.tar.gz` 中. 这两个压缩文件供测评机测评Java. 如果您不想下载这两个大文件，则只需在其中放置两个空的 `.tar.gz` 文件.
 
 接下来，您需要在终端中运行以下命令: (不是在 `docker` 目录中的命令)
 ```sh
@@ -31,9 +29,9 @@ docker run -it -p 80:80 -p 3690:3690 <image-id>
 docker run -it -p 80:80 -p 3690:3690 --cap-add SYS_PTRACE <image-id>
 ```
 
-UOJ的默认主机名是 `local_uoj.ac`, 因此您需要在操作系统中修改主机文件，以将 `127.0.0.1` 映射到 `local_uoj.ac`. (在Linux上是 `/etc/hosts` ) 之后，您可以在Web浏览器中访问UOJ。
+UOJ的**默认主机名**是 `local_uoj.ac`, 因此您需要在操作系统中修改主机文件，以将 `127.0.0.1` 映射到 `local_uoj.ac`. (在Linux上是 `/etc/hosts` ) 之后，您可以在Web浏览器中访问UOJ.
 
-UOJ安装后注册的第一个用户将是超户. 如果您需要另一个超户, 请注册一个用户，并将其 `user group` 更改为 `user_info` 表中的 `<samp>S</samp>`.
+UOJ安装后注册的第一个用户将是**超户**(拥有访问网站的全部权限，并且能在上面进行任何操作). 如果您需要另一个超户, 请注册一个用户，并将其 `user group` 更改为 `user_info` 表中的 `<samp>S</samp>`.
 
 运行
 ```sh
@@ -89,7 +87,3 @@ mysql默认密码: `root`
 ## 许可证
 
 MIT License
-
-#### 嗯最后，祝大家 UOJ 使用愉快！
-
-#### 愿 UOJ 开源能带来更多的便利，愿能帮到更多还在路上的 OIer 们.
