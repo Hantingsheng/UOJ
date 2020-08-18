@@ -1,5 +1,7 @@
 # Universal Online Judge
 
+![UOJ](https://github.com/Hantingsheng/UOJ/blob/master/UOJ.png)
+
 ## 序言
 
 这是UOJ的已归档版本. 在安装之前，请确保 [Docker](https://www.docker.com/) 已安装在您的操作系统上.
